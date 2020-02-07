@@ -29,10 +29,10 @@ class Extractor {
         val header = document.selectFirst("h1:contains(2014 Material Design color palettes)").parent().parent()
         val moduleModule = header.select("div[class=\"col-list\"]")[1].children()
 
+        // follows pattern (line with content -> empty line) (last line is missing elements)
         val modules = moduleModule.filterIndexed { index, _ -> index % 2 == 0 }.flatMap { it.children() }
         println(modules.size)
         return modules
-            // follows pattern (line with content -> empty line) (last line is missing elements)
             .filter { element -> element.children().size > 2 }
             .map { module ->
                 val children = module.children()
